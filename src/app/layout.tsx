@@ -1,40 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ToastProvider } from "@/components/ToastProvider";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import { Analytics } from "@vercel/analytics/next";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import NavbarWrapper from "@/components/NavbarWrapper";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "nToast - Modern Toast Notifications",
-  description: "Beautiful, animated toast notifications for modern web applications",
+    title: "NSCE",
+    description: "We provide the infrastructure you need to bring your ideas to life.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-100`}>
-        <ThemeProvider>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
-        </ThemeProvider>
-        <Analytics />
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+    return (
+        <html lang="de" className="scroll-smooth">
+        <body className="bg-black text-white antialiased overflow-x-hidden">
+        <NavbarWrapper />
+        <main className="relative min-h-screen">{children}</main>
+        <Footer />
+        </body>
+        </html>
+    );
 }

@@ -34,3 +34,50 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Deploy mit Firebase Hosting (Windows / cmd.exe)
+
+Voraussetzungen:
+- Node.js installiert
+- Firebase CLI installieren (einmalig):
+
+```cmd
+npm install -g firebase-tools
+```
+
+1) In Firebase einloggen und Projekt wählen
+```cmd
+firebase login
+firebase use nsce-fr1
+```
+
+2) Firestore-Sicherheitsregeln deployen
+```cmd
+firebase deploy --only firestore:rules
+```
+
+3) App als Production-Build bauen (Next.js)
+```cmd
+npm run build
+```
+
+4) Deploy zu Firebase Hosting
+- Diese Repo ist bereits mit `firebase.json` konfiguriert. Für Next.js 15+/16 unterstützt Firebase die Web-Frameworks automatisch.
+```cmd
+firebase deploy --only hosting
+```
+
+Nach dem Deploy erhältst du deine Hosting-URL. Stelle sicher, dass in der Firebase Console unter Authentication folgende Provider aktiviert sind:
+- Google
+- E-Mail/Passwort
+
+Und lege für das Portal mindestens einen Admin-UID-Datensatz an:
+- Firestore Collection: `admin-uids`
+- Document-ID: `<deine-auth-uid>` (Inhalt kann leer sein)
+
+Optional: Caching
+- Turbopack/Next.js Cache liegt in `.next/`. Für saubere Builds kannst du ihn leeren:
+```cmd
+rmdir /s /q .next
+npm run build
+```
